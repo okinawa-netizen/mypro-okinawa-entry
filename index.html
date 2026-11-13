@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイプロ エントリーサポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --navy:#00004B; --red:#F63C42; --red-ink:#E0262D; --cyan:#3BDCFF; --sky:#71C7DD; --sky-soft:#E3F6FB;
+  --yellow:#FFD210; --yellow-soft:#FFF6CC; --orange:#E66C10; --bg:#F2F1F1; --paper:#ffffff;
+  --sub:#5A5A78; --line:#DCDDDD; --ok:#0F7B5F; --warn:#B4530A; --ng:#E0262D;
+  --r:14px; --shadow:4px 4px 0 var(--navy); --shadow-sm:3px 3px 0 var(--navy);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:var(--bg);color:var(--navy);line-height:1.75;font-size:15px;padding-bottom:96px}
+button{font-family:inherit;color:inherit}
+a{color:var(--navy)}
+
+/* ===== Header ===== */
+.top{background:var(--paper);border-bottom:2px solid var(--navy)}
+.top-in{max-width:760px;margin:0 auto;padding:14px 16px 12px;display:flex;align-items:center;gap:12px}
+.logo{position:relative;flex-shrink:0;width:52px;height:46px;background:var(--red);color:#fff;border-radius:50% 50% 50% 50%/55% 55% 45% 45%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;letter-spacing:.02em}
+.logo::after{content:"";position:absolute;left:8px;bottom:-7px;border:7px solid transparent;border-top:9px solid var(--red);border-left:3px solid transparent;transform:rotate(18deg)}
+.ttl{flex:1;min-width:0}
+.ttl small{display:block;font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.06em}
+.ttl h1{font-size:19px;font-weight:900;line-height:1.3}
+.countdown{flex-shrink:0;text-align:center;background:var(--yellow);border:2px solid var(--navy);border-radius:10px;padding:4px 9px;box-shadow:var(--shadow-sm);line-height:1.2}
+.countdown b{display:block;font-size:20px;font-weight:900}
+.countdown span{font-size:10.5px;font-weight:700}
+
+/* ===== Stepper ===== */
+.stepper{position:sticky;top:0;z-index:50;background:rgba(242,241,241,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.stepper-in{max-width:760px;margin:0 auto;padding:10px 12px 8px;display:flex;gap:4px;align-items:flex-start}
+.st{flex:1;min-width:0;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:0;position:relative}
+.st .dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--navy);background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;position:relative;z-index:1;transition:all .2s}
+.st .lab{font-size:10.5px;font-weight:700;color:var(--sub);white-space:nowrap}
+.st::before{content:"";position:absolute;top:15px;left:-50%;width:100%;height:2px;background:var(--line);z-index:0}
+.st:first-child::before{display:none}
+.st.done .dot{background:var(--navy);color:#fff}
+.st.done::before,.st.active::before{background:var(--navy)}
+.st.active .dot{background:var(--red);color:#fff;transform:scale(1.12);box-shadow:2px 2px 0 var(--navy)}
+.st.active .lab{color:var(--navy)}
+
+/* ===== Screens ===== */
+.wrap{max-width:760px;margin:0 auto;padding:18px 14px}
+.screen{display:none;animation:fadeup .28s ease}
+.screen.on{display:block}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.08em;color:#fff;background:var(--navy);padding:2px 10px;border-radius:20px;margin-bottom:8px}
+h2.h{font-size:23px;font-weight:900;line-height:1.4;margin-bottom:6px}
+.lead{color:var(--sub);font-size:14.5px;margin-bottom:16px}
+
+.card{background:var(--paper);border:2px solid var(--navy);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:18px}
+.card.soft{box-shadow:none;border-color:var(--line)}
+.card h3{font-size:16.5px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 9px;border-radius:20px;border:1.5px solid var(--navy);background:var(--paper);white-space:nowrap}
+.tag.red{background:var(--red-ink);color:#fff;border-color:var(--red-ink)}
+.tag.sky{background:var(--sky-soft)}
+.tag.yel{background:var(--yellow-soft)}
+
+/* WAR */
+.war{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0 4px}
+.war div{border:2px solid var(--navy);border-radius:12px;padding:10px 8px;text-align:center;background:var(--paper)}
+.war b{display:block;font-size:15px;font-weight:900;letter-spacing:.02em}
+.war span{display:block;font-size:11.5px;color:var(--sub);line-height:1.5;margin-top:2px}
+.war .w{background:var(--yellow-soft)} .war .a{background:var(--sky-soft)} .war .r{background:var(--red);border-color:var(--navy);color:#fff}
+.war .r span{color:#fff}
+.note{font-size:13px;color:var(--sub);line-height:1.65}
+.notice{background:var(--paper);border:2px solid var(--red-ink);border-radius:var(--r);padding:14px 16px;margin-bottom:18px}
+.notice h3{font-size:15.5px;font-weight:900;color:var(--red-ink);margin-bottom:6px}
+.notice ul{list-style:none}
+.notice li{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.65;padding:5px 0;border-top:1px dashed var(--line)}
+.notice li:first-child{border-top:none}
+.notice li b{font-weight:900}
+.notice .ic{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--red-ink);color:#fff;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+
+.howlist{list-style:none;counter-reset:h}
+.howlist li{counter-increment:h;display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.howlist li:last-child{border-bottom:none}
+.howlist li::before{content:counter(h);flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-weight:900;font-size:12.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.ai-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ai-links a{text-decoration:none;font-weight:700;font-size:14px;border:2px solid var(--navy);border-radius:30px;padding:5px 16px;min-height:44px;display:inline-flex;align-items:center;background:var(--paper);box-shadow:2px 2px 0 var(--navy)}
+.safe{display:flex;gap:10px;align-items:flex-start;background:var(--sky-soft);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.65}
+.safe svg{flex-shrink:0;margin-top:2px}
+
+/* Form parts */
+.field{margin-bottom:14px}
+.field label,.field .label{display:block;font-weight:700;font-size:14.5px;margin-bottom:5px}
+.field .help{font-size:12.5px;color:var(--sub);margin:-3px 0 6px}
+.in{width:100%;border:2px solid var(--navy);border-radius:10px;padding:10px 12px;font-size:16px;font-family:inherit;line-height:1.7;background:#FCFCFE;color:var(--navy);resize:none;overflow:hidden;min-height:48px;transition:box-shadow .15s,background .15s}
+.in:focus{outline:none;background:#fff;box-shadow:0 0 0 4px rgba(59,220,255,.45)}
+.in::placeholder{color:#9A9AB0;font-size:14px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.chk{border:2px solid var(--navy);background:var(--paper);border-radius:30px;padding:6px 14px;min-height:46px;font-size:14px;font-weight:700;cursor:pointer;transition:all .12s;touch-action:manipulation}
+.seg button[aria-pressed="true"],.chk[aria-pressed="true"]{background:var(--navy);color:#fff}
+.chk::before{content:"＋ ";font-weight:900}
+.chk[aria-pressed="true"]::before{content:"✓ "}
+.hints{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 8px}
+.hints span{font-size:12px;background:var(--yellow-soft);border:1.5px dashed #C9A400;border-radius:20px;padding:1px 9px;color:var(--navy)}
+
+/* Block tabs (step 2) */
+.btabs{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;margin:0 -2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.btabs::-webkit-scrollbar{display:none}
+.btab{flex-shrink:0;border:2px solid var(--navy);background:var(--paper);border-radius:12px;padding:5px 12px;min-height:44px;touch-action:manipulation;font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btab i{font-style:normal;width:9px;height:9px;border-radius:50%;background:var(--line);border:1.5px solid var(--navy)}
+.btab.filled i{background:var(--cyan)}
+.btab.on{background:var(--navy);color:#fff}
+.btab.on i{border-color:#fff}
+.block{display:none;animation:fadeup .22s ease}
+.block.on{display:block}
+.qref{background:var(--bg);border-radius:10px;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--sub);margin-bottom:14px}
+.qref b{color:var(--navy)}
+.meter{display:flex;align-items:center;gap:10px;margin:2px 0 12px}
+.meter .bar{flex:1;height:8px;background:var(--bg);border-radius:6px;overflow:hidden;border:1.5px solid var(--navy)}
+.meter .fill{height:100%;width:0;background:var(--cyan);transition:width .25s}
+.meter .txt{font-size:12px;font-weight:700;color:var(--sub);white-space:nowrap}
+.block-nav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+
+.summary{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:6px 0 14px}
+.summary li{font-size:13px;font-weight:700;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:6px;background:var(--paper)}
+.summary li.ok{border-color:var(--navy);background:var(--sky-soft)}
+.summary li::before{content:"・";color:var(--sub)}
+.summary li.ok::before{content:"✓";color:var(--ok);font-weight:900}
+
+/* Buttons */
+.btn{touch-action:manipulation;min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--navy);border-radius:12px;padding:11px 18px;font-size:15px;font-weight:900;cursor:pointer;background:var(--paper);box-shadow:var(--shadow-sm);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--navy)}
+.btn.primary{background:var(--red-ink);color:#fff;width:100%;font-size:17px;padding:14px}
+.btn.primary.copied{background:var(--ok)}
+.btn.ghost{box-shadow:none;border-color:var(--line);color:var(--sub);font-weight:700}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+.linkbtn{background:none;border:none;color:var(--navy);font-weight:700;font-size:14px;text-decoration:underline;cursor:pointer;padding:10px 12px;min-height:44px;display:block;margin:2px auto 0}
+.after{display:none;margin-top:12px;background:var(--yellow-soft);border:2px solid var(--navy);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.7}
+.after.show{display:block;animation:fadeup .25s ease}
+.after b{font-weight:900}
+
+/* Counters (step 5) */
+.cnt{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px dashed var(--line)}
+.cnt:first-of-type{border-top:none}
+.ring{flex-shrink:0;width:58px;height:58px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:14px;line-height:1.1}
+.ring .num small{font-size:9.5px;font-weight:700;color:var(--sub)}
+.cnt-body{flex:1;min-width:0}
+.cnt-head{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;font-weight:900;margin-bottom:5px}
+.cnt-head span{font-weight:700;color:var(--sub);font-size:12px;white-space:nowrap}
+.cnt .in{min-height:44px;font-size:16px;max-height:220px}
+.cnt .in.cf{overflow-y:auto}
+.verdict{font-size:12.5px;font-weight:900;margin-top:4px;min-height:1em}
+.v-ok{color:var(--ok)} .v-warn{color:var(--warn)} .v-ng{color:var(--ng)}
+
+.checklist{list-style:none}
+.checklist li{border-bottom:1px dashed var(--line)}
+.checklist li:last-child{border-bottom:none}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:9px 0;font-size:14px;cursor:pointer;line-height:1.6}
+.checklist input{appearance:none;-webkit-appearance:none;flex-shrink:0;width:22px;height:22px;border:2px solid var(--navy);border-radius:6px;margin-top:1px;background:var(--paper);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.checklist input:checked{background:var(--navy)}
+.checklist input:checked::after{content:"✓";color:#fff;font-weight:900;font-size:14px}
+.progress{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.progress .bar{flex:1;height:10px;border-radius:6px;background:var(--bg);border:1.5px solid var(--navy);overflow:hidden}
+.progress .fill{height:100%;width:0;background:var(--red);transition:width .25s}
+.progress b{font-size:13px;white-space:nowrap}
+.done-msg{display:none;text-align:center;font-weight:900;color:var(--ok);padding-top:8px}
+.done-msg.show{display:block}
+
+.adult{border:2px dashed var(--sub);border-radius:var(--r);padding:14px 16px;font-size:13.5px;background:transparent;margin-bottom:18px}
+.adult h3{font-size:14.5px;font-weight:900;margin-bottom:4px}
+.adult ul{padding-left:1.2em}
+.reset{display:block;min-height:46px;margin:6px auto 18px;background:none;border:2px solid var(--line);color:var(--ng);font-weight:700;border-radius:10px;padding:9px 16px;font-size:13.5px;cursor:pointer}
+.foot{text-align:center;font-size:11.5px;color:var(--sub);line-height:1.7}
+
+/* Bottom bar */
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.96);border-top:2px solid var(--navy);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.bottom-in{max-width:760px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center}
+.bottom .btn{flex:1;padding:11px}
+.bottom .btn.next{background:var(--navy);color:#fff}
+.bottom .btn[disabled]{opacity:.35;pointer-events:none}
+body.typing .bottom{transform:translateY(110%)}
+.bottom{transition:transform .2s}
+
+/* Sheet */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,75,.35);z-index:80;display:none}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--paper);border-top:2px solid var(--navy);border-radius:18px 18px 0 0;max-height:78vh;display:flex;flex-direction:column;transform:translateY(105%);transition:transform .25s ease}
+.sheet.show{transform:none}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:900}
+.sheet-head button{border:2px solid var(--navy);background:var(--paper);border-radius:8px;padding:2px 10px;font-weight:700;cursor:pointer}
+.sheet pre{flex:1;overflow:auto;padding:14px 16px 24px;font-family:inherit;font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-all;max-width:760px;margin:0 auto;width:100%}
+
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,30px);opacity:0;z-index:100;background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-weight:700;font-size:14px;pointer-events:none;transition:all .25s;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (min-width:700px){
+  h2.h{font-size:27px}
+  .ttl h1{font-size:23px}
+  .war b{font-size:17px}
+  .summary{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo" aria-hidden="true">マイ</div>
+    <div class="ttl">
+      <small>全国高校生マイプロジェクトアワード2026 沖縄県Summit</small>
+      <h1>エントリーサポート</h1>
+    </div>
+    <div class="countdown" id="countdown" aria-live="polite"><span>締切まで</span><b id="cd-days">–</b><span id="cd-unit">日</span></div>
+  </div>
+</header>
+
+<nav class="stepper" aria-label="ステップ">
+  <div class="stepper-in" id="stepper"></div>
+</nav>
+
+<main class="wrap">
+
+<!-- ===== 0 はじめに ===== -->
+<section class="screen" data-step="0" aria-label="はじめに">
+  <span class="eyebrow">はじめに</span>
+  <h2 class="h">あなたのマイプロを、<br>あなたの言葉で。</h2>
+  <p class="lead">エントリーは、ここまでの活動を<b>ふりかえる</b>ところから始まります。上手な文章より、あなたが考えたこと・迷ったこと・気づいたことのほうが伝わります。</p>
+
+  <div class="notice">
+    <h3>使う前に、知っておいてほしいこと</h3>
+    <ul>
+      <li><span class="ic">1</span><span>このページを使ったからといって、<b>選考で有利になるわけではありません。</b></span></li>
+      <li><span class="ic">2</span><span>これは、あなたの考えを<b>文章にするお手伝い</b>です。最後は、<b>あなた自身の言葉</b>になっているかを確かめよう。</span></li>
+      <li><span class="ic">3</span><span>AIは、あなたが言っていないことや事実と違うこと（<b>ある事ない事</b>）を書いてしまうことがあります。できた文章は<b>必ず自分で読み直そう。</b></span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>マイプロは「成果」だけじゃない</h3>
+    <div class="war">
+      <div class="w"><b>Will</b><span>実現したい<br>変えたい</span></div>
+      <div class="a"><b>Action</b><span>やってみる<br>小さな一歩も</span></div>
+      <div class="r"><b>Reflection</b><span>ふりかえって<br>学びにする</span></div>
+    </div>
+    <p class="note">うまくいかなかったことも、まだ途中のことも、ふりかえれば学びになります。エントリーフォームの質問は、その<b>ふりかえり</b>を聞いています。</p>
+  </div>
+
+  <div class="card">
+    <h3>このページでやること</h3>
+    <ol class="howlist">
+      <li><span>AIに「話を足さない」約束をしてもらう</span></li>
+      <li><span><b>自分の言葉で書き出す</b>（いちばん大事。話し言葉・メモでOK）</span></li>
+      <li><span>AIに、フォームの形に並べ直してもらう</span></li>
+      <li><span>自分の言葉になっているか見直す</span></li>
+      <li><span>文字数を数えて、提出前のチェックをする</span></li>
+    </ol>
+    <p class="note" style="margin-top:8px">先にAIのチャットを新しく開いておこう（どれでもOK）。</p>
+    <div class="ai-links">
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+      <a href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+      <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+    </div>
+  </div>
+
+  <div class="safe">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00004B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+    <div>このページは、入力した内容を<b>どこにも保存・送信しません</b>。ページを閉じると消えるので、長く書いたらメモアプリにも貼っておこう。名前・学校名・連絡先は、AIに入れなくて大丈夫です。</div>
+  </div>
+</section>
+
+
+<!-- ===== 1 準備 ===== -->
+<section class="screen" data-step="1" aria-label="ステップ1 準備">
+  <span class="eyebrow">STEP 1</span>
+  <h2 class="h">AIに約束してもらう</h2>
+  <p class="lead">AIが勝手に話を足さないように、最初にルールを伝えます。新しいチャットで<b>最初に送る</b>文章です。</p>
+
+  <div class="card">
+    <div class="field">
+      <span class="label">学年</span>
+      <div class="seg" data-single="grade">
+        <button type="button" aria-pressed="false">高校1年</button>
+        <button type="button" aria-pressed="false">高校2年</button>
+        <button type="button" aria-pressed="false">高校3年</button>
+        <button type="button" aria-pressed="false">その他</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="team">ひとりで？ チームで？</label>
+      <input class="in" id="team" data-key="team" placeholder="例：ひとり／3人のチーム">
+    </div>
+    <div class="field">
+      <span class="label">プロジェクトが始まったきっかけの場</span>
+      <div class="seg" data-single="origin">
+        <button type="button" aria-pressed="false">授業（探究・課題研究）</button>
+        <button type="button" aria-pressed="false">授業（その他）</button>
+        <button type="button" aria-pressed="false">部活動</button>
+        <button type="button" aria-pressed="false">委員会活動</button>
+        <button type="button" aria-pressed="false">学校外の活動</button>
+        <button type="button" aria-pressed="false">その他</button>
+      </div>
+    </div>
+    <button class="btn primary" type="button" data-copy="p1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>送る文章をコピー</span></button>
+    <button class="linkbtn" type="button" data-peek="p1">送る文章を見る</button>
+    <div class="after" data-after="p1">AIに貼り付けて送ろう。<b>「準備OK」</b>と返ってきたら、下の「次へ」でステップ2へ。</div>
+  </div>
+</section>
+
+
+<!-- ===== 2 書き出す ===== -->
+<section class="screen" data-step="2" aria-label="ステップ2 書き出す">
+  <span class="eyebrow">STEP 2　いちばん大事</span>
+  <h2 class="h">自分の言葉で書き出す</h2>
+  <p class="lead">フォームの質問に合わせて、思い出せることをどんどん書こう。<b>うまく書かなくていい。</b>空欄があっても大丈夫（AIが質問してくれます）。</p>
+  <div class="safe" style="background:var(--yellow-soft);margin-bottom:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00004B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.5h.01"></path></svg><div><b>あなたにしか書けないことを入れよう。</b>場所の名前、会った人、回数や人数、言われた言葉、そのときの気持ち。こういう具体が多いほど、ほかの人と似ない、あなたの文章になります。方言や口ぐせもそのままでOK。</div></div>
+
+  <div class="btabs" role="tablist" id="btabs"></div>
+
+  <div class="card">
+
+    <!-- A -->
+    <div class="block" data-block="A">
+      <h3><span class="tag red">A</span>目指したい未来と、いまやっていること</h3>
+      <div class="qref"><b>フォームの質問①につながる（400字以内）</b><br>プロジェクト／探究活動を通して「目指したい未来（目的）」と、それに向けて何を実施しているか。</div>
+      <div class="field"><label for="a1">気になったこと・モヤモヤしたこと</label>
+        <div class="hints"><span>どんな場面で気になった？</span><span>まわりはどんな様子だった？</span></div>
+        <textarea class="in" id="a1" data-key="a1" placeholder="思い出せることをそのまま"></textarea></div>
+      <div class="field"><label for="a2">どんな状態になったらいいなと思う？</label>
+        <div class="hints"><span>誰にとって？</span><span>ほかにはどんなイメージがある？</span></div>
+        <textarea class="in" id="a2" data-key="a2" placeholder="うれしい未来を想像して"></textarea></div>
+      <div class="field"><label for="a3">そのために、いまやっていること</label>
+        <textarea class="in" id="a3" data-key="a3" placeholder="調べている／作っている／人に会っている など、なんでも"></textarea></div>
+    </div>
+
+    <!-- B -->
+    <div class="block" data-block="B">
+      <h3><span class="tag red">B</span>ここまでの道のり（試行錯誤も）</h3>
+      <div class="qref"><b>フォームの質問②につながる（200〜800字・箇条書きOK）</b><br>どんなきっかけで始めたか、何をしてきたか（調べた・やってみた・考えた・失敗した・成功した・改善した）、転機になったこと。</div>
+      <div class="field"><label for="b1">はじまり</label>
+        <div class="hints"><span>いつ？</span><span>どんなことがあった？</span></div>
+        <textarea class="in" id="b1" data-key="b1" placeholder="始めたきっかけ"></textarea></div>
+      <div class="field"><label for="b2">やったこと（順番に）</label>
+        <div class="help">回数・人数・場所・期間がわかれば書こう（例：3回、20人に聞いた、2か月）。</div>
+        <textarea class="in" id="b2" data-key="b2" placeholder="・〇月 〇〇を調べた&#10;・〇月 〇〇さんに話を聞いた&#10;・〇月 〇〇をやってみた"></textarea></div>
+      <div class="field"><label for="b3">うまくいかなかったこと・思っていたのと違ったこと</label>
+        <textarea class="in" id="b3" data-key="b3" placeholder="失敗もそのまま書いてOK。どんな場面だった？"></textarea></div>
+      <div class="field"><label for="b4">そのあと変えたこと・工夫したこと</label>
+        <textarea class="in" id="b4" data-key="b4" placeholder="やり方・考え方で変えたことは？"></textarea></div>
+      <div class="field"><label for="b5">転機（ここで流れが変わった、という出来事）</label>
+        <textarea class="in" id="b5" data-key="b5" placeholder="なければ空欄でOK"></textarea></div>
+      <div class="field"><label for="b6">覚えている場面・言われた言葉（そのまま）</label>
+        <div class="help">その場で聞いた言葉、見た光景、自分が言ったことを、思い出したまま。</div>
+        <div class="hints"><span>誰に何て言われた？</span><span>そのとき目の前に何があった？</span></div>
+        <textarea class="in" id="b6" data-key="b6" placeholder="例：「〇〇」って言われて、ちょっと悔しかった"></textarea></div>
+    </div>
+
+    <!-- C -->
+    <div class="block" data-block="C">
+      <h3><span class="tag red">C</span>一緒にやった人・協力してくれた人</h3>
+      <div class="qref"><b>フォームの質問③につながる（選ぶ式・いくつでも）</b><br>協働した方・協力してくれた方をすべて。</div>
+      <div class="field"><span class="label">当てはまるものをタップ</span>
+        <div class="seg" data-multi="who">
+          <button type="button" class="chk" aria-pressed="false" data-v="チームメンバー">チームメンバー</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="メンバー以外の自校の生徒">自校の生徒</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="メンバー以外の他校の生徒">他校の生徒</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="学校の先生">学校の先生</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="家族">家族</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="地域の方">地域の方</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="行政の方">行政の方</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="大学や企業の方">大学や企業の方</button>
+          <button type="button" class="chk" aria-pressed="false" data-v="その他">その他</button>
+        </div></div>
+      <div class="field"><label for="c1">誰と、どんなふうに関わった？</label>
+        <textarea class="in" id="c1" data-key="c1" placeholder="例：地域の〇〇さんに話を聞いた。先生に〇〇を手伝ってもらった。"></textarea></div>
+    </div>
+
+    <!-- D -->
+    <div class="block" data-block="D">
+      <h3><span class="tag red">D</span>自分（たち）の学び・変化</h3>
+      <div class="qref"><b>フォームの質問④につながる（200〜800字）</b><br>プロジェクト／探究活動を進める中で、あなた（たち）が得た学びや、生まれた変化・成長。</div>
+      <div class="field"><label for="d1">始めた頃と今で、活動への向き合い方は変わった？</label>
+        <div class="hints"><span>始めた頃はどう思ってた？</span><span>今はどう？</span></div>
+        <textarea class="in" id="d1" data-key="d1" placeholder="意識・気持ち・スタンスの変化"></textarea></div>
+      <div class="field"><label for="d2">いちばん時間を使って考えたこと・悩んだこと</label>
+        <textarea class="in" id="d2" data-key="d2" placeholder="どんなことで迷った？ どうやって考えた？"></textarea></div>
+      <div class="field"><label for="d3">新しく身についた・磨かれたと思う力</label>
+        <textarea class="in" id="d3" data-key="d3" placeholder="どんな場面でそう感じた？"></textarea></div>
+      <div class="field"><label for="d4">やってみて気づいたこと・わかったこと</label>
+        <textarea class="in" id="d4" data-key="d4" placeholder="見え方が変わったことは？"></textarea></div>
+    </div>
+
+    <!-- E -->
+    <div class="block" data-block="E">
+      <h3><span class="tag red">E</span>まわりの人・ものの変化</h3>
+      <div class="qref"><b>フォームの質問⑤につながる（400字以内）</b><br>あなた（たち）以外の誰・何に、どんな変化があったか（喜んでくれた人の様子、新たな発見、周囲・社会の変化など）。まだ準備段階なら「特になし」でOK。</div>
+      <div class="field"><label for="e1">まわりや相手の変化</label>
+        <div class="hints"><span>誰の反応を覚えてる？</span><span>どんな言葉をもらった？</span></div>
+        <textarea class="in" id="e1" data-key="e1" placeholder="まだなければ空欄でOK"></textarea></div>
+    </div>
+
+    <!-- F -->
+    <div class="block" data-block="F">
+      <h3><span class="tag red">F</span>これからチャレンジしたいこと</h3>
+      <div class="qref"><b>フォームの質問⑥につながる（400字以内）</b><br>自分（たち）のこと、プロジェクトのこと、どちらか、もしくは両方。</div>
+      <div class="field"><label for="f1">これからやってみたいこと</label>
+        <div class="hints"><span>次に試したいことは？</span><span>会ってみたい人は？</span></div>
+        <textarea class="in" id="f1" data-key="f1" placeholder="続けたいこと・広げたいこと"></textarea></div>
+    </div>
+
+    <!-- Send -->
+    <div class="block" data-block="S">
+      <h3><span class="tag red">✓</span>まとめてAIに送る</h3>
+      <div class="field"><label for="pname">プロジェクト名（仮でOK）</label>
+        <div class="help">送信後は変えられないので、最後に決めればOK。</div>
+        <input class="in" id="pname" data-key="pname" placeholder="例：〇〇をもっと〇〇にするプロジェクト"></div>
+      <p class="note">書き出せたところ</p>
+      <ul class="summary" id="summary"></ul>
+      <button class="btn primary" type="button" data-copy="p2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>書き出しをまとめてコピー</span></button>
+      <button class="linkbtn" type="button" data-peek="p2">送る文章を見る</button>
+      <div class="after" data-after="p2">AIから<b>質問</b>が返ってきます。チャットで、思い出せる範囲で答えよう。答え終わったら「次へ」でステップ3へ。</div>
+    </div>
+
+    <div class="meter" id="meter" aria-live="polite"><div class="bar"><div class="fill" id="meter-fill"></div></div><div class="txt" id="meter-txt">0字</div></div>
+    <div class="block-nav">
+      <button class="btn ghost" type="button" id="bprev">← 前のテーマ</button>
+      <button class="btn" type="button" id="bnext">次のテーマ →</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 3 下書き ===== -->
+<section class="screen" data-step="3" aria-label="ステップ3 下書き">
+  <span class="eyebrow">STEP 3</span>
+  <h2 class="h">フォームの形に並べてもらう</h2>
+  <p class="lead">AIの質問に答え終わったら送ります。あなたが書いた言葉<b>だけ</b>で、フォームの質問①〜⑥に並べ直してもらいます。</p>
+  <div class="card">
+    <button class="btn primary" type="button" data-copy="p3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>送る文章をコピー</span></button>
+    <button class="linkbtn" type="button" data-peek="p3">送る文章を見る</button>
+    <div class="after" data-after="p3">下書きの中に<b>【本人に確認】</b>があったら、そこは自分で書き足そう。AIに考えてもらうところではありません。<br>AIは<b>ある事ない事</b>を書いてしまうことがあります。自分がやっていないこと・言っていないことが入っていないか、必ず読み直そう。</div>
+  </div>
+</section>
+
+
+<!-- ===== 4 見直し ===== -->
+<section class="screen" data-step="4" aria-label="ステップ4 見直し">
+  <span class="eyebrow">STEP 4</span>
+  <h2 class="h">自分の言葉になっているか見直す</h2>
+  <p class="lead">AIに「足したこと」や「ありきたりになったところ」を指摘してもらいます。<b>直すかどうかは、自分で決めよう。</b></p>
+  <div class="card">
+    <button class="btn primary" type="button" data-copy="p4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>送る文章をコピー</span></button>
+    <button class="linkbtn" type="button" data-peek="p4">送る文章を見る</button>
+    <div class="after" data-after="p4">指摘を見て、直したいところだけ直そう。終わったら「次へ」で文字数と提出前のチェックへ。</div>
+  </div>
+</section>
+
+
+<!-- ===== 5 仕上げ ===== -->
+<section class="screen" data-step="5" aria-label="ステップ5 仕上げ">
+  <span class="eyebrow">STEP 5</span>
+  <h2 class="h">文字数と、提出前のチェック</h2>
+  <p class="lead">AIが数える文字数はずれやすいので、ここで数えよう（改行・空白も1文字）。ここに貼った内容も保存されません。</p>
+
+  <div class="card">
+    <h3>文字数チェック</h3>
+    <div id="counters"></div>
+  </div>
+
+  <div class="card">
+    <h3>プロジェクト名カナのチェック</h3>
+    <p class="note" style="margin-bottom:8px">全角カタカナで。記号は「！」「？」（全角）だけ使えます。</p>
+    <input class="in" id="kana" data-key="kana" placeholder="例：マイプロジェクト！">
+    <div class="verdict" id="kana-v"></div>
+  </div>
+
+  <div class="notice">
+    <h3>最後にもう一度</h3>
+    <ul>
+      <li><span class="ic">1</span><span>このページを使っても、<b>選考で有利になるわけではありません。</b></span></li>
+      <li><span class="ic">2</span><span>出すのは<b>あなたの言葉</b>。声に出して読んで、自分の話として話せるか確かめよう。</span></li>
+      <li><span class="ic">3</span><span>AIが書いた中に、<b>やっていないこと・言っていないこと</b>が入っていないか、もう一度読み直そう。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>エントリーする前に</h3>
+    <div class="progress"><div class="bar"><div class="fill" id="cl-fill"></div></div><b id="cl-txt">0 / 0</b></div>
+    <ul class="checklist" id="checklist">
+      <li><label><input type="checkbox"><span><b>参加規程</b>と<b>参加者・保護者同意書</b>を、チームメンバー全員とその保護者が確認・同意した。</span></label></li>
+      <li><label><input type="checkbox"><span>エントリーは<b>代表者1人</b>だけが、公式サイト（myprojects.jp/award）の「リフレクションフォーム」から出す。</span></label></li>
+      <li><label><input type="checkbox"><span>メールアドレスは<b>自分のもの</b>。<b>@icloud.com は使わない</b>（完了メールが届かないことが多い）。@katariba.net から受け取れるようにした。</span></label></li>
+      <li><label><input type="checkbox"><span>緊急連絡先は<b>本人以外の大人</b>（保護者など）の番号を用意した。</span></label></li>
+      <li><label><input type="checkbox"><span>エントリーSummitは<b>沖縄県Summit（2027年1月23日・土）</b>を選ぶ。日程が合わなければ予備Summit（12月23日・水）。</span></label></li>
+      <li><label><input type="checkbox"><span>全国Summitをめざすなら、<b>2/20（土）</b>と<b>3/19〜21（金〜日）</b>の予定をあけられる。</span></label></li>
+      <li><label><input type="checkbox"><span>AIが書いた中に、<b>やっていないこと・言っていないこと・事実と違うこと</b>がないか、自分で読み直した。</span></label></li>
+      <li><label><input type="checkbox"><span>丸数字（①②）や絵文字を使っていない。記号は全角にした。</span></label></li>
+      <li><label><input type="checkbox"><span>エントリーSummitと選考情報は<b>送信後に直せない</b>。もう一度出し直すこともできない（最初の1回が選考の対象）。読み直してから送る。</span></label></li>
+      <li><label><input type="checkbox"><span>送ったら<b>1時間以内に「エントリー完了メール」</b>が届くか確かめる。届かなければ迷惑メールフォルダを見る。</span></label></li>
+      <li><label><input type="checkbox"><span>締切は<b>12月4日（金）17:00</b>。当日は問い合わせの返事が遅れるので、<b>前日までに</b>出す。</span></label></li>
+    </ul>
+    <div class="done-msg" id="cl-done">準備OK！ エントリーしよう。</div>
+  </div>
+
+  <div class="adult">
+    <h3>サポートする大人の方へ</h3>
+    <ul>
+      <li>時間の大半は、ステップ2の書き出しに使ってください。「どんな場面だった？」「ほかには？」と広げる声かけが効きます。</li>
+      <li>ステップ3の下書きは、本人の言葉を並べ直すためのものです。【本人に確認】の箇所をAIに埋めさせないでください。</li>
+      <li>同じ学校から何組も出すときは、下書きを見比べて、言い回しが似ていないか確かめてください。似ていたら、本人だけが知っている場面や言葉をもう一度聞いてみてください。</li>
+      <li>入力内容はこのページにも、どのサーバーにも残りません。共用の端末では、終わったら下の「入力を全部消す」を押してください。</li>
+    </ul>
+  </div>
+
+  <button class="reset" type="button" id="reset">入力を全部消す</button>
+  <p class="foot">全国高校生マイプロジェクト沖縄県事務局<br>okinawa-mypro@katariba.net</p>
+</section>
+
+</main>
+
+<div class="bottom">
+  <div class="bottom-in">
+    <button class="btn" type="button" id="prev">← 戻る</button>
+    <button class="btn next" type="button" id="next">次へ →</button>
+  </div>
+</div>
+
+<div class="sheet-bg" id="sheet-bg"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-head"><span id="sheet-title">送る文章</span><button type="button" id="sheet-close">閉じる</button></div>
+  <pre id="sheet-body"></pre>
+</div>
+<div class="toast" id="toast">コピーしました！ AIに貼り付けてね</div>
+
+<script>
+// ============================================================
+// フォームの設問（2026年度 リフレクションフォーム下書き記入シートより）
+// ============================================================
+var QUESTIONS = [
+  { no:'1', key:'q1', text:'あなた（たち）が、プロジェクト/探究活動を通して「目指したい未来（目的）」と、それに向けて何を実施しているかを教えてください。', limit:'400文字以内', min:0, max:400 },
+  { no:'2', key:'q2', text:'あなた（たち）が進めてきたプロジェクト/探究活動の過程（試行錯誤も含む）を教えてください。※箇条書きでも構いません。', limit:'200文字以上800文字以内', min:200, max:800 },
+  { no:'3', key:'q3', text:'探究活動/プロジェクトで協働した方・協力してくれた方をすべて教えてください。', limit:'選ぶ式・いくつでも', min:0, max:0 },
+  { no:'4', key:'q4', text:'プロジェクト/探究活動を進める中で、あなた（たち）が得た学びや、生まれた変化/成長について教えてください。', limit:'200文字以上800文字以内', min:200, max:800 },
+  { no:'5', key:'q5', text:'プロジェクト/探究活動を進める中で、あなた（たち）以外の誰・何にどんな変化があったか具体的に教えてください。（喜んでくれた人の様子、新たな発見、周囲・社会の変化等）', limit:'400文字以内。まだ準備段階なら「特になし」', min:0, max:400 },
+  { no:'6', key:'q6', text:'今後チャレンジしたいことを教えてください。※自分（たち）自身に関して、プロジェクトに関して、どちらか、もしくは両方でも構いません。', limit:'400文字以内', min:0, max:400 }
+];
+var STEPS = ['はじめに','準備','書き出す','下書き','見直し','仕上げ'];
+var BLOCKS = [
+  { id:'A', label:'A 未来', keys:['a1','a2','a3'] },
+  { id:'B', label:'B 道のり', keys:['b1','b2','b3','b4','b5','b6'] },
+  { id:'C', label:'C 協力', keys:['c1'], multi:'who' },
+  { id:'D', label:'D 学び', keys:['d1','d2','d3','d4'] },
+  { id:'E', label:'E まわり', keys:['e1'] },
+  { id:'F', label:'F これから', keys:['f1'] },
+  { id:'S', label:'送る', keys:['pname'] }
+];
+
+// ============================================================
+// 値の取り出し
+// ============================================================
+function $(s, r){ return (r||document).querySelector(s); }
+function $$(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+function raw(key){ var el = $('[data-key="'+key+'"]'); return el ? (el.value||'').trim() : ''; }
+function v(key){ var t = raw(key); return t === '' ? '（未記入）' : t; }
+function single(name){ var b = $('[data-single="'+name+'"] [aria-pressed="true"]'); return b ? b.textContent.trim() : '（未記入）'; }
+function multi(name){ var bs = $$('[data-multi="'+name+'"] [aria-pressed="true"]'); return bs.length ? bs.map(function(b){ return '・' + b.getAttribute('data-v'); }).join('\n') : '（未記入）'; }
+
+// ============================================================
+// プロンプト
+// ============================================================
+var PROMPTS = {
+  p1: function(){ return [
+    'あなたは、高校生が「全国高校生マイプロジェクトアワード2026」にエントリーするための文章づくりを手伝う役です。',
+    'これから私が、自分のプロジェクト・探究活動について、思い出せることを書き出します。あなたの役目は、私の言葉を整理して、エントリーフォームの形に並べることです。',
+    '',
+    '【かならず守ってほしいこと】',
+    '・私が書いていない事実、エピソード、数字、人の反応、気持ちを、付け足さないでください。',
+    '・足りないところがあっても、想像で埋めないでください。私に質問してください。',
+    '・私の言葉や言い回しを、できるだけそのまま使ってください。かっこいい言葉や難しい言葉に置き換えないでください。',
+    '・うまくいかなかったことや、まだ途中であることも、そのまま大事にしてください。このアワードは、活動の規模や成果、発表の派手さではなく、取り組む中での気づきや学び（ふりかえり）を大事にしています。',
+    '・私が頼んだステップだけをやってください。先回りして文章を書かないでください。',
+    '',
+    '【ほかの人と同じ文章にしないために】',
+    '・このエントリーには、たくさんの高校生がAIを使って取り組みます。どの高校生にも当てはまる一般的な文は、私の文章としては使えません。',
+    '・軸にするのは、私が書いた具体（場所・人・回数や人数・言われた言葉・そのときの気持ち）です。',
+    '・決まり文句は使わないでください。たとえば「〜を通して成長できた」「〜の大切さを学んだ」「多くの人に〜を届けたい」「かけがえのない経験」「〜に貢献したい」「課題を解決したい」のような言い方です。',
+    '・「きっかけ→課題→行動→学び」のような決まった型や、決まった書き出しを当てはめないでください。私の話の中でいちばん私らしいところを中心に組み立ててください。',
+    '・方言や口ぐせ、私なりの言い方は、意味が伝わる範囲で残してください。',
+    '',
+    '【書類選考で見られること】',
+    '主体性／共生・協働／振り返り・内省／学び の4つです。',
+    '',
+    '【私について】',
+    '・学年：' + single('grade'),
+    '・ひとりかチームか：' + v('team'),
+    '・プロジェクトが始まったきっかけの場：' + single('origin'),
+    '',
+    'わかったら「準備OK」とだけ返してください。'
+  ].join('\n'); },
+
+  p2: function(){ return [
+    '私のプロジェクトについて、思い出せることを書き出しました。話し言葉やメモのままです。',
+    '',
+    '【プロジェクト名（仮）】', v('pname'), '',
+    '===== A 目指したい未来と、いまやっていること =====',
+    '＜気になったこと・モヤモヤしたこと＞', v('a1'),
+    '＜どんな状態になったらいいと思うか＞', v('a2'),
+    '＜そのためにいまやっていること＞', v('a3'), '',
+    '===== B ここまでの道のり =====',
+    '＜はじまり＞', v('b1'),
+    '＜やったこと＞', v('b2'),
+    '＜うまくいかなかったこと・思っていたのと違ったこと＞', v('b3'),
+    '＜そのあと変えたこと・工夫したこと＞', v('b4'),
+    '＜転機＞', v('b5'),
+    '＜覚えている場面・言われた言葉（そのまま）＞', v('b6'), '',
+    '===== C 一緒にやった人・協力してくれた人 =====',
+    '＜選んだもの＞', multi('who'),
+    '＜どんなふうに関わったか＞', v('c1'), '',
+    '===== D 自分（たち）の学び・変化 =====',
+    '＜始めた頃と今での、活動への向き合い方の変化＞', v('d1'),
+    '＜いちばん時間を使って考えたこと・悩んだこと＞', v('d2'),
+    '＜新しく身についた・磨かれた力＞', v('d3'),
+    '＜やってみて気づいたこと・わかったこと＞', v('d4'), '',
+    '===== E まわりの人・ものの変化 =====', v('e1'), '',
+    '===== F これからチャレンジしたいこと =====', v('f1'), '',
+    '-----',
+    'お願いしたいこと：',
+    '1. まだ文章にしないでください。',
+    '2. 読んでみて、空欄のところや、もう少し聞けば私らしさが出そうなところについて、私に質問してください。質問は5つまで、1つずつ番号をつけてください。',
+    '   とくに、私にしか書けない具体（どこで・誰と・何回・何て言われた・そのときどう感じた）が足りないところを優先して聞いてください。',
+    '3. 質問は「なんで？」と理由を問いつめる形ではなく、「どんな場面だった？」「ほかにはどんなことがあった？」「そのとき、まわりはどんな様子だった？」「やってみて何か変わった？」のように、思い出を広げる形にしてください。',
+    '4. 私が答えたら、その答えも書き出しの一部として扱ってください。'
+  ].join('\n'); },
+
+  p3: function(){
+    var qs = QUESTIONS.map(function(q){ return '【質問' + q.no + '】' + q.text + '（' + q.limit + '）'; }).join('\n');
+    return [
+    'ありがとうございます。ここまでの私の書き出しと、質問への答えだけを使って、エントリーフォームの下書きを作ってください。',
+    '',
+    '【フォームの質問】', qs, '',
+    '【書き方のルール】',
+    '・私が書いたこと、答えたことだけを使ってください。書いていないことは足さないでください。',
+    '・材料が足りなくて書けないところは、文章を作らずに【本人に確認：〇〇について】と書いて空けてください。',
+    '・私の言い回しをできるだけ残してください。きれいな一般論や、どこかで聞いたような言葉にしないでください。',
+    '・文体は「です・ます」でそろえてください。',
+    '・質問1は書き出しのA、質問2はB、質問3はC、質問4はD、質問5はE、質問6はFを中心に使ってください。',
+    '・質問2は、時間の順にわかるように書いてください（箇条書きでも構いません）。回数・人数・期間など、私が書いた数字は残してください。',
+    '・質問3は選ぶ式なので、私が選んだものをそのまま並べてください。「その他」を選んでいたら、どんな方かを私の言葉で1行添えてください。',
+    '・質問5は、まわりの変化について私が何も書いていなければ「特になし」としてください。',
+    '・丸数字（①②など）や絵文字は使わないでください。記号は全角にしてください。',
+    '・決まり文句（「〜を通して成長できた」「〜の大切さを学んだ」「多くの人に〜を届けたい」「かけがえのない経験」「〜に貢献したい」など）は使わないでください。',
+    '・各質問の文字数の上限を超えないようにしてください。',
+    '・質問2と4には最低文字数（200文字）があります。材料が足りなくて届かないときは、言葉を足してふくらませずに、【本人に確認】を入れて、何を書き足せばよいかを私に教えてください。',
+    '',
+    '【書き終えたら、置き換えテストをしてください】',
+    '各質問の答えの文を1つずつ見て、「別の高校生の、別のプロジェクトの文章に入れても、そのまま通じてしまう文」がないか確かめてください。そういう文は、私の書き出しにある具体に置き換えてください。置き換える具体がなければ、その文は消して【本人に確認：〇〇の具体】と書いてください。',
+    '',
+    '最後に、プロジェクト名を私の言葉から3つ提案してください（決めるのは私です）。'
+  ].join('\n'); },
+
+  p4: function(){ return [
+    '下書きを見直したいです。次の4つを確認してください。書き直しはせず、指摘と提案だけをください。直すかどうかは私が決めます。',
+    '',
+    '【1. 私が言っていないこと】',
+    '私の書き出しや答えに出てこない事実・数字・気持ち・表現が入っていないか、全部挙げてください。',
+    '',
+    '【2. 書類選考の4つの観点】',
+    '主体性／共生・協働／振り返り・内省／学び のそれぞれが、どの質問の答えの、どの部分に表れているかを示してください。表れ方が弱い観点があれば、私の書き出しの中から使えそうな材料を挙げてください（新しく作らないでください）。',
+    '',
+    '【3. 誰が書いても同じになる文】',
+    '別の高校生の別のプロジェクトに入れても、そのまま通じてしまう文を全部挙げてください。決まり文句や、私の言葉がありきたりな言い回しに置き換わったところも含めます。それぞれ、もとの私の言葉や、使えそうな私の具体を並べて示してください。',
+    '',
+    '【4. 読む人がつまずく所】',
+    '話が急に飛ぶところ、何のことかわかりにくいところを挙げてください。',
+    '',
+    '※文字数は、このあと自分で数えます。'
+  ].join('\n'); }
+};
+
+// ============================================================
+// 画面の切り替え
+// ============================================================
+var cur = 0, curBlock = 0;
+function renderStepper(){
+  var box = $('#stepper'); box.innerHTML = '';
+  STEPS.forEach(function(name, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'st' + (i < cur ? ' done' : '') + (i === cur ? ' active' : '');
+    b.setAttribute('aria-label', (i===0?'':'ステップ'+i+' ') + name);
+    if (i === cur) b.setAttribute('aria-current', 'step');
+    b.innerHTML = '<span class="dot">' + (i === 0 ? '★' : (i < cur ? '✓' : i)) + '</span><span class="lab">' + name + '</span>';
+    b.onclick = function(){ go(i); };
+    box.appendChild(b);
+  });
+}
+function go(i){
+  cur = Math.max(0, Math.min(STEPS.length - 1, i));
+  $$('.screen').forEach(function(s){ s.classList.toggle('on', +s.getAttribute('data-step') === cur); });
+  renderStepper();
+  $('#prev').disabled = cur === 0;
+  $('#next').textContent = cur === STEPS.length - 1 ? 'おつかれさま！' : (cur === 0 ? 'はじめる →' : '次へ →');
+  $('#next').disabled = cur === STEPS.length - 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(function(){ $$('.screen.on textarea.in').forEach(autoResize); }, 30);
+}
+$('#prev').onclick = function(){ go(cur - 1); };
+$('#next').onclick = function(){ go(cur + 1); };
+
+// ステップ2のテーマ切り替え
+function renderTabs(){
+  var box = $('#btabs'); box.innerHTML = '';
+  BLOCKS.forEach(function(bl, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'tab');
+    b.className = 'btab' + (i === curBlock ? ' on' : '') + (blockFilled(bl) ? ' filled' : '');
+    b.setAttribute('aria-selected', i === curBlock ? 'true' : 'false');
+    b.innerHTML = '<i aria-hidden="true"></i>' + bl.label;
+    b.onclick = function(){ showBlock(i); };
+    box.appendChild(b);
+  });
+  var on = box.children[curBlock];
+  if (on) { var l = on.offsetLeft - box.offsetLeft, r = l + on.offsetWidth; if (l < box.scrollLeft || r > box.scrollLeft + box.clientWidth) box.scrollTo({ left: Math.max(0, l - 16), behavior: 'smooth' }); }
+}
+function blockChars(bl){
+  var n = 0;
+  bl.keys.forEach(function(k){ n += Array.from(raw(k)).length; });
+  return n;
+}
+function blockFilled(bl){
+  if (bl.multi && $$('[data-multi="'+bl.multi+'"] [aria-pressed="true"]').length) return true;
+  return blockChars(bl) > 0;
+}
+function showBlock(i){
+  curBlock = Math.max(0, Math.min(BLOCKS.length - 1, i));
+  $$('.block').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-block') === BLOCKS[curBlock].id); });
+  $('#bprev').style.visibility = curBlock === 0 ? 'hidden' : 'visible';
+  $('#bnext').style.visibility = curBlock === BLOCKS.length - 1 ? 'hidden' : 'visible';
+  $('#bnext').textContent = curBlock === BLOCKS.length - 2 ? 'まとめて送る →' : '次のテーマ →';
+  $('#meter').style.display = BLOCKS[curBlock].id === 'S' ? 'none' : 'flex';
+  renderTabs(); updateMeter(); renderSummary();
+  setTimeout(function(){ $$('.block.on textarea.in').forEach(autoResize); }, 30);
+  var top = $('#btabs').getBoundingClientRect().top + window.scrollY - 70;
+  if (window.scrollY > top) window.scrollTo({ top: top, behavior: 'smooth' });
+}
+$('#bprev').onclick = function(){ showBlock(curBlock - 1); };
+$('#bnext').onclick = function(){ showBlock(curBlock + 1); };
+
+function updateMeter(){
+  var bl = BLOCKS[curBlock]; if (bl.id === 'S') return;
+  var n = blockChars(bl), goal = 300;
+  $('#meter-fill').style.width = Math.min(100, n / goal * 100) + '%';
+  var msg = n + '字';
+  if (n === 0) msg = 'まだ0字';
+  else if (n < 80) msg += '　その調子';
+  else if (n < goal) msg += '　いいね';
+  else msg += '　たくさん書けてる！';
+  $('#meter-txt').textContent = msg;
+}
+function renderSummary(){
+  var ul = $('#summary'); if (!ul) return; ul.innerHTML = '';
+  BLOCKS.slice(0, 6).forEach(function(bl){
+    var li = document.createElement('li');
+    li.className = blockFilled(bl) ? 'ok' : '';
+    li.textContent = bl.label + (blockFilled(bl) && blockChars(bl) ? '（' + blockChars(bl) + '字）' : '');
+    ul.appendChild(li);
+  });
+}
+
+// ============================================================
+// ボタン類
+// ============================================================
+$$('[data-single]').forEach(function(g){
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var on = b.getAttribute('aria-pressed') === 'true';
+    $$('button', g).forEach(function(x){ x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', on ? 'false' : 'true');
+  });
+});
+$$('[data-multi]').forEach(function(g){
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    renderTabs(); renderSummary();
+  });
+});
+
+function copyText(text, done){
+  var fallback = function(){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    var ok = false; try { ok = document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+    if (ok) done(); else openSheet(text, 'うまくコピーできませんでした。下の文章を長押しして、全部選んでコピーしてね。');
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else { fallback(); }
+}
+$$('[data-copy]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.getAttribute('data-copy');
+    copyText(PROMPTS[id](), function(){
+      var label = btn.querySelector('span'), orig = label.textContent;
+      btn.classList.add('copied'); label.textContent = 'コピーしました！';
+      setTimeout(function(){ btn.classList.remove('copied'); label.textContent = orig; }, 1800);
+      toast('コピーしました！ AIに貼り付けてね');
+      var after = $('[data-after="'+id+'"]'); if (after) after.classList.add('show');
+    });
+  });
+});
+$$('[data-peek]').forEach(function(btn){
+  btn.addEventListener('click', function(){ openSheet(PROMPTS[btn.getAttribute('data-peek')]()); });
+});
+function openSheet(text, title){
+  $('#sheet-title').textContent = title || '送る文章';
+  $('#sheet-body').textContent = text;
+  $('#sheet-bg').style.display = 'block';
+  requestAnimationFrame(function(){ $('#sheet').classList.add('show'); });
+}
+function closeSheet(){ $('#sheet').classList.remove('show'); setTimeout(function(){ $('#sheet-bg').style.display = 'none'; }, 250); }
+$('#sheet-close').onclick = closeSheet; $('#sheet-bg').onclick = closeSheet;
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSheet(); });
+
+var toastTimer;
+function toast(msg){ var t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1700); }
+
+// ============================================================
+// 文字数チェック
+// ============================================================
+var RING = 2 * Math.PI * 24;
+function buildCounters(){
+  var box = $('#counters');
+  QUESTIONS.forEach(function(q){
+    if (!q.max) return;
+    var d = document.createElement('div'); d.className = 'cnt';
+    d.innerHTML =
+      '<div class="ring"><svg width="58" height="58" viewBox="0 0 58 58" aria-hidden="true">' +
+      '<circle cx="29" cy="29" r="24" fill="none" stroke="#F2F1F1" stroke-width="7"></circle>' +
+      '<circle class="arc" cx="29" cy="29" r="24" fill="none" stroke="#3BDCFF" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + RING + '" stroke-dashoffset="' + RING + '"></circle>' +
+      '</svg><div class="num"><span class="n">0</span><small>/' + q.max + '</small></div></div>' +
+      '<div class="cnt-body"><div class="cnt-head">質問' + q.no + '<span>' + (q.min ? q.min + '〜' : '〜') + q.max + '字</span></div>' +
+      '<textarea class="in cf" data-key="' + q.key + '" data-min="' + q.min + '" data-max="' + q.max + '" aria-label="質問' + q.no + 'の文章" placeholder="仕上がった文章をここに貼る"></textarea>' +
+      '<div class="verdict"></div></div>';
+    box.appendChild(d);
+  });
+}
+function updateCounter(el){
+  var n = Array.from(el.value).length, min = +el.getAttribute('data-min'), max = +el.getAttribute('data-max');
+  var wrap = el.closest('.cnt'), arc = $('.arc', wrap), vd = $('.verdict', wrap);
+  $('.n', wrap).textContent = n;
+  arc.setAttribute('stroke-dashoffset', RING * (1 - Math.min(1, n / max)));
+  var color = '#3BDCFF', msg = '', cls = '';
+  if (n === 0) { msg = ''; }
+  else if (n > max) { color = '#E0262D'; msg = (n - max) + '字オーバー'; cls = 'v-ng'; }
+  else if (min && n < min) { color = '#E66C10'; msg = 'あと' + (min - n) + '字'; cls = 'v-warn'; }
+  else { color = '#0F7B5F'; msg = 'OK'; cls = 'v-ok'; }
+  arc.setAttribute('stroke', color);
+  vd.textContent = msg; vd.className = 'verdict ' + cls;
+}
+function checkKana(){
+  var s = raw('kana'), vd = $('#kana-v');
+  if (!s) { vd.textContent = ''; vd.className = 'verdict'; return; }
+  var bad = Array.from(s).filter(function(ch){ return !/[゠-ヿ！？]/.test(ch); });
+  if (bad.length) { vd.textContent = '使えない文字があります：' + bad.filter(function(c,i,a){ return a.indexOf(c) === i; }).map(function(c){ return c === ' ' ? '（半角スペース）' : (c === '　' ? '（全角スペース）' : c); }).join(' '); vd.className = 'verdict v-ng'; }
+  else { vd.textContent = 'OK'; vd.className = 'verdict v-ok'; }
+}
+
+// チェックリスト
+function updateChecklist(){
+  var all = $$('#checklist input'), on = all.filter(function(c){ return c.checked; }).length;
+  $('#cl-fill').style.width = (on / all.length * 100) + '%';
+  $('#cl-txt').textContent = on + ' / ' + all.length;
+  $('#cl-done').classList.toggle('show', on === all.length);
+}
+$('#checklist').addEventListener('change', updateChecklist);
+
+// ============================================================
+// 入力イベント
+// ============================================================
+function autoResize(el){ if (el.tagName !== 'TEXTAREA') return; el.style.height = 'auto'; el.style.height = Math.max(48, el.scrollHeight + 4) + 'px'; }
+document.addEventListener('input', function(e){
+  var t = e.target; if (!t.classList || !t.classList.contains('in')) return;
+  autoResize(t);
+  if (t.classList.contains('cf')) updateCounter(t);
+  if (t.id === 'kana') checkKana();
+  if (t.closest('[data-step="2"]')) { updateMeter(); renderTabs(); renderSummary(); }
+});
+
+// ============================================================
+// 締切カウントダウン（2026-12-04 17:00 JST）
+// ============================================================
+function countdown(){
+  var deadline = Date.UTC(2026, 11, 4, 8, 0, 0); // 17:00 JST
+  var ms = deadline - Date.now();
+  if (ms <= 0) { $('#cd-days').textContent = '終了'; $('#cd-unit').textContent = ''; return; }
+  var days = Math.floor(ms / 86400000);
+  if (days >= 1) { $('#cd-days').textContent = days; $('#cd-unit').textContent = '日'; }
+  else { $('#cd-days').textContent = Math.ceil(ms / 3600000); $('#cd-unit').textContent = '時間'; }
+}
+
+// ============================================================
+// 全部消す
+// ============================================================
+var armed = false;
+$('#reset').onclick = function(){
+  var b = this;
+  if (!armed) { armed = true; b.textContent = 'もう一度押すと全部消えます'; setTimeout(function(){ armed = false; b.textContent = '入力を全部消す'; }, 4000); return; }
+  armed = false; b.textContent = '入力を全部消す';
+  $$('.in').forEach(function(el){ el.value = ''; autoResize(el); if (el.classList.contains('cf')) updateCounter(el); });
+  $$('[aria-pressed="true"]').forEach(function(x){ x.setAttribute('aria-pressed', 'false'); });
+  $$('#checklist input').forEach(function(c){ c.checked = false; });
+  $$('.after').forEach(function(a){ a.classList.remove('show'); });
+  checkKana(); updateChecklist(); curBlock = 0; showBlock(0); go(0);
+  toast('全部消しました');
+};
+function hasInput(){
+  return $$('.in').some(function(el){ return (el.value||'').trim(); }) || $$('[aria-pressed="true"]').length > 0;
+}
+window.addEventListener('beforeunload', function(e){ if (hasInput()) { e.preventDefault(); e.returnValue = ''; } });
+
+// スマホでキーボードが出ているあいだは、下のバーを隠す
+document.addEventListener('focusin', function(e){ if (e.target.classList && e.target.classList.contains('in')) document.body.classList.add('typing'); });
+document.addEventListener('focusout', function(){ setTimeout(function(){ var a = document.activeElement; if (!(a && a.classList && a.classList.contains('in'))) document.body.classList.remove('typing'); }, 50); });
+
+// ============================================================
+// はじめ
+// ============================================================
+buildCounters(); updateChecklist(); countdown(); setInterval(countdown, 60000);
+showBlock(0); go(0);
+</script>
+</body>
+</html>
